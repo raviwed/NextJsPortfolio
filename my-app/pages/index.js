@@ -1,11 +1,13 @@
 import Head from 'next/head'
-import Image from 'next/image'
-import { Inter } from '@next/font/google'
-import styles from '../styles/Home.module.css'
 
+import { Inter } from '@next/font/google'
+import Image from 'next/image'
+import Link from 'next/link'
+import Education from './Education'
+import React from 'react'
 const inter = Inter({ subsets: ['latin'] })
 
-export default function Home() {
+export default function Home(data) {
   return (
     <>
       <Head>
@@ -14,110 +16,38 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={styles.main}>
-        <div className={styles.description}>
-          <p>
-            Get started by editing&nbsp;
-            <code className={styles.code}>pages/index.js</code>
-          </p>
+        <div >
           <div>
-            <a
-              href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              By{' '}
-              <Image
-                src="/vercel.svg"
-                alt="Vercel Logo"
-                className={styles.vercelLogo}
-                width={100}
-                height={24}
-                priority
-              />
-            </a>
+          <div style={{boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px", width:"70%",padding:"10px",height:"400px",backgroundColor:"lightgreen"}} >
+          <Image src={data.avatar_url} width={200} height={200}  style={{borderRadius:"40%"}} alt="raviteja" />
+          <h1 >{data.name}</h1>
+        <h2 style={{color:"darkgrey"}}>@{data.login}</h2>
+          <div style={{display:"flex",gap:"10px"}}>
+          <Link href="https://drive.google.com/file/d/1wTqCaIa2P7Si_P6Pa4QUkUaSNcdatGny/view?usp=share_link"><button style={{padding:"10px", border:"0px",borderRadius:"10px",backgroundColor:"blue",color:" white"}} >Resume</button></Link>
+            <button  style={{padding:"10px", border:"0px",borderRadius:"10px",backgroundColor:"green",color:"white"}} >Follow</button>
           </div>
         </div>
-
-        <div className={styles.center}>
-          <Image
-            className={styles.logo}
-            src="/next.svg"
-            alt="Next.js Logo"
-            width={180}
-            height={37}
-            priority
-          />
-          <div className={styles.thirteen}>
-            <Image
-              src="/thirteen.svg"
-              alt="13"
-              width={40}
-              height={31}
-              priority
-            />
+        <div style={{boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",backgroundColor:"lightgreen",padding:"10px",width:"70%",margin:"5px"}}>
+        <div>
+          <h3>{data.bio}</h3>
           </div>
+          <div>
+        <  h3>TypeScript ,HTML ,React.js,CSS,JS,Next.js</h3>
         </div>
-
-        <div className={styles.grid}>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Docs <span>-&gt;</span>
-            </h2>
-            <p className={inter.className}>
-              Find in-depth information about Next.js features and&nbsp;API.
-            </p>
-          </a>
-
-          <a
-            href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Learn <span>-&gt;</span>
-            </h2>
-            <p className={inter.className}>
-              Learn about Next.js in an interactive course with&nbsp;quizzes!
-            </p>
-          </a>
-
-          <a
-            href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Templates <span>-&gt;</span>
-            </h2>
-            <p className={inter.className}>
-              Discover and deploy boilerplate example Next.js&nbsp;projects.
-            </p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Deploy <span>-&gt;</span>
-            </h2>
-            <p className={inter.className}>
-              Instantly deploy your Next.js site to a shareable URL
-              with&nbsp;Vercel.
-            </p>
-          </a>
+        </div> 
+        <Education/> 
         </div>
-      </main>
+        </div>
     </>
   )
+}
+export async function getServerSideProps() {
+  
+  const res = await fetch(`https://api.github.com/users/raviwed`)
+  const data = await res.json()
+
+  
+  return { 
+    props: data 
+  }
 }
